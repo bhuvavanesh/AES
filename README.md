@@ -1,33 +1,83 @@
 # EX-8-ADVANCED-ENCRYPTION-STANDARD ALGORITHM
-# Aim:
+
+## Name : BHUVANESHKUAR
+## Reg no :212223040027
+
+## Aim:
 To use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption.
 
-# ALGORITHM:
+## ALGORITHM:
 AES is based on a design principle known as a substitution–permutation.
 AES does not use a Feistel network like DES, it uses variant of Rijndael.
 It has a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits.
 AES operates on a 4 × 4 column-major order array of bytes, termed the state
-# PROGRAM:
+## PROGRAM:
 ~~~
 #include <stdio.h>
 #include <string.h>
 
-void xorCrypt(char *in, char *key) {
-  for (int i = 0; in[i]; i++) in[i] ^= key[i % strlen(key)];
+void simpleAESEncrypt(char *plaintext, char *key, char *ciphertext) {
+    int i;
+    int plen = strlen(plaintext);
+    int klen = strlen(key);
+
+    for (i = 0; i < plen; i++) {
+        ciphertext[i] = plaintext[i] ^ key[i % klen];
+    }
+    ciphertext[i] = '\0';
+}
+
+void simpleAESDecrypt(char *ciphertext, char *key, char *decryptedText) {
+    int i;
+    int clen = strlen(ciphertext);
+    int klen = strlen(key);
+
+    for (i = 0; i < clen; i++) {
+        decryptedText[i] = ciphertext[i] ^ key[i % klen];
+    }
+    decryptedText[i] = '\0';
+}
+
+void printASCII(char *ciphertext) {
+    printf("Encrypted Message (ASCII values): ");
+    int clen = strlen(ciphertext);
+    for (int i = 0; i < clen; i++) {
+        printf("%d ", (unsigned char)ciphertext[i]);
+    }
+    printf("\n");
 }
 
 int main() {
-  char msg[] = "VARSHA RAJ", key[] = "secretkey";
-  printf("Original: %s\n", msg);
-  xorCrypt(msg, key);
-  printf("Encrypted: %s\n", msg);
-  xorCrypt(msg, key);
-  printf("Decrypted: %s\n", msg);
-  return 0;
+    char plaintext[100], key[100], ciphertext[100], decryptedText[100];
+
+    printf("Enter the plaintext: ");
+    fgets(plaintext, sizeof(plaintext), stdin);
+    plaintext[strcspn(plaintext, "\n")] = '\0'; // remove newline
+
+    printf("Enter the key: ");
+    fgets(key, sizeof(key), stdin);
+    key[strcspn(key, "\n")] = '\0'; // remove newline
+
+    if (strlen(key) == 0) {
+        printf("Error: Key cannot be empty!\n");
+        return 1;
+    }
+
+    simpleAESEncrypt(plaintext, key, ciphertext);
+    printASCII(ciphertext);
+
+    simpleAESDecrypt(ciphertext, key, decryptedText);
+    printf("Decrypted Message: %s\n", decryptedText);
+
+    return 0;
 }
+
 ~~~
-# OUTPUT:
-![cry ex 8](https://github.com/user-attachments/assets/04d41c84-967e-42ff-be56-63a2f35dfb11)
-# RESULT:
- The program is executed successfully.
+## OUTPUT:
+<img width="822" height="311" alt="image" src="https://github.com/user-attachments/assets/b83a6b2f-c724-4236-83ba-306ae58d6f6f" />
+
+
+## RESULT:
+Hence, Advanced Encryption Standard (AES) Algorithm for a practical application like URL 
+Encryption is done successfully.
 
